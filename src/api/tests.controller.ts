@@ -7,7 +7,7 @@ import {ApiTags} from "@nestjs/swagger";
 export class TestsController {
     @Get('/')
     async index() {
-        return "tests controller bla bla bla"
+        return "tests controller"
     }
 }
 

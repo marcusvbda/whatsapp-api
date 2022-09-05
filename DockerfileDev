@@ -18,8 +18,5 @@ RUN npm install
 
 COPY . /usr/src/app
 
-RUN npm run build
-
-ENTRYPOINT npm run start:prod
-# ENTRYPOINT npm run start:dev
+ENTRYPOINT npm run start:dev
 EXPOSE 3000

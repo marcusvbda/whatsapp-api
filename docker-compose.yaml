@@ -4,8 +4,8 @@ services:
   wpp-api:
     container_name: wpp-api
     build: .
-    image: allburov/whatsapp-http-api
-    restart: always
+    tty: true
+    restart: unless-stopped
     ports:
       - 3000:3000
     shm_size: "1gb"
@@ -14,3 +14,4 @@ services:
     volumes:
       - ./tokens:/app/tokens
       - ./files:/app/files
+      - ./src:/app/src
