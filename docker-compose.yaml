@@ -1,41 +1,16 @@
 version: '3.4'
 
-services:
-  traefik:
-    restart: unless-stopped
-    container_name: traefik-wpp
-    image: traefik:latest
-    command: --api.insecure=true --providers.docker
-    ports:
-      - "80:80"
-      - "8080:8080"
-    networks:
-      - web
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      
-  whatsapp-http-api:
+services:      
+  wpp-api:
+    container_name: wpp-api
     build: .
     image: allburov/whatsapp-http-api
     restart: always
     ports:
       - 3000:3000
     shm_size: "1gb"
-    networks:
-      - web
     environment:
       - WHATSAPP_DOWNLOADS_FOLDER=/app/files/downloads
     volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
-    depends_on:
-      - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.wpp.rule=Host(`whatsapp-sender.local`)"
-      - 'traefik.http.services.wpp.loadbalancer.server.port=3000'
-
-networks:
-  web:
-    external: true
+      - ./tokens:/app/tokens
+      - ./files:/app/files

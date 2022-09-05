@@ -1,5 +1,5 @@
 FROM node:15
-# Chrome
+
 RUN apt-get update \
     && apt-get install -y wget gnupg \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -10,9 +10,14 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
-COPY ./ /usr/src/app
+
+COPY package.json /usr/src/app
 
 RUN npm install
 
-ENTRYPOINT npm run start:dev
+COPY . /usr/src/app
+
+RUN npm run build
+
+ENTRYPOINT npm run start:prod
 EXPOSE 3000
